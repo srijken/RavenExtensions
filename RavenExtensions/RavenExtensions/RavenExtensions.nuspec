@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>RavenDB.OData</id>
+    <version>1.0.0.1</version>
+    <title>RavenDB OData helper</title>
+    <authors>Sander Rijken</authors>
+    <owners>Sander Rijken</owners>
+    <licenseUrl>https://raw.githubusercontent.com/srijken/RavenExtensions/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/srijken/RavenExtensions</projectUrl>
+    <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Helper functions for WebApi OData, that enables $inlinecount=allpages</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>RavenDB OData WebApi</tags>
+  </metadata>
+</package>
