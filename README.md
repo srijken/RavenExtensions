@@ -33,3 +33,20 @@ Installing using App_Start\WebApiConfig
             config.MessageHandlers.Add(new InlineRavenCountHandler());
         }
     }
+
+
+Enabling OData on a Web API call using a RavenDB store
+------------------------------------------------------
+
+    [Queryable(HandleNullPropagation = HandleNullPropagationOption.False, AllowedQueryOptions = AllowedQueryOptions.All, EnableConstantParameterization = false, MaxTop = 1024)]
+    public Raven.Client.Linq.IRavenQueryable<Company> GetCompanies()
+    {
+        return _session.Query<Company>();
+    }
+
+Calling the API
+---------------
+See the [OData uri conventions][2] or [breeze.js][1] on how to call the API.
+
+[1]: http://www.breezejs.com
+[2]: http://www.odata.org/documentation/odata-version-2-0/uri-conventions/
