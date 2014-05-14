@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>RavenDB.OData</id>
-    <version>1.0.0.1</version>
+    <version>1.0.0.2</version>
     <title>RavenDB OData helper</title>
     <authors>Sander Rijken</authors>
     <owners>Sander Rijken</owners>
@@ -15,4 +15,7 @@
     <copyright>Copyright 2014</copyright>
     <tags>RavenDB OData WebApi</tags>
   </metadata>
+  <files>
+    <file src="bin\release\RavenExtensions.dll" target="lib\net45"/>
+  </files>
 </package>
