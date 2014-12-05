@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RavenExtensions", "RavenExtensions\RavenExtensions.csproj", "{4D6CD97E-F276-4A01-B73D-40150737A8B8}"
 EndProject
@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RavenExtensions.45", "RavenExtensions.45\RavenExtensions.45.csproj", "{0A9B668F-4FAE-42B6-B7BE-63CA1B37DC03}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4D6CD97E-F276-4A01-B73D-40150737A8B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D6CD97E-F276-4A01-B73D-40150737A8B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D6CD97E-F276-4A01-B73D-40150737A8B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A9B668F-4FAE-42B6-B7BE-63CA1B37DC03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A9B668F-4FAE-42B6-B7BE-63CA1B37DC03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A9B668F-4FAE-42B6-B7BE-63CA1B37DC03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A9B668F-4FAE-42B6-B7BE-63CA1B37DC03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
