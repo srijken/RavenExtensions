@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RavenDB.OData
 {
@@ -22,8 +18,6 @@ namespace RavenDB.OData
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
                                                                CancellationToken cancellationToken)
         {
-            var queryParams = request.RequestUri.ParseQueryString();
-
             if (!ShouldInlineCount(request))
                 return base.SendAsync(request, cancellationToken);
 
@@ -36,21 +30,21 @@ namespace RavenDB.OData
                     // Is this a response we can work with?
                     if (!ResponseIsValid(response)) return response;
 
-                    var pagedResultsValue = this.GetValueFromObjectContent(response.Content);
-                    Type queriedType;
+                    var pagedResultsValue = GetValueFromObjectContent(response.Content);
 
                     // Can we find the underlying type of the results?
-                    if (pagedResultsValue is IQueryable)
+                    var queryable = pagedResultsValue as IQueryable;
+                    if (queryable != null)
                     {
-                        queriedType = ((IQueryable) pagedResultsValue).ElementType;
+                        Type queriedType = queryable.ElementType;
 
                         // we need to work with an instance of IRavenQueryable to support statistics
                         var genericQueryableType =
                             typeof (Raven.Client.Linq.IRavenQueryable<>).MakeGenericType(queriedType);
 
-                        if (genericQueryableType.IsInstanceOfType(pagedResultsValue))
+                        if (genericQueryableType.IsInstanceOfType(queryable))
                         {
-                            RavenQueryStatistics stats = null;
+                            RavenQueryStatistics stats;
 
                             // register our statistics object with the Raven query provider.
                             // After the query executes, this object will contain the appropriate stats data
@@ -60,7 +54,7 @@ namespace RavenDB.OData
 
                             // Create the return object.
                             var resultsValueMethod =
-                                this.GetType().GetMethod(
+                                GetType().GetMethod(
                                     "CreateResultValue", BindingFlags.Instance | BindingFlags.NonPublic)
                                     .MakeGenericMethod(
                                         new[] {queriedType});
@@ -76,11 +70,9 @@ namespace RavenDB.OData
                             return response;
 
                         }
-                        else
-                            return response;
-                    }
-                    else
                         return response;
+                    }
+                    return response;
                 });
         }
 
@@ -98,7 +90,7 @@ namespace RavenDB.OData
             var queryParams = request.RequestUri.ParseQueryString();
 
             var inlinecount = queryParams["$inlinecount"];
-            return string.Compare(inlinecount, "allpages", true) == 0;
+            return String.Compare(inlinecount, "allpages", StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         // Dynamically invoked for the T returned by the resulting ApiController
@@ -121,44 +113,19 @@ namespace RavenDB.OData
             return instance as ResultValue<T>;
         }
 
-        // We need this because ObjectContent's Value property is internal
         private object GetValueFromObjectContent(HttpContent content)
         {
             var objContent = content as ObjectContent;
             if (objContent == null) return null;
 
             return objContent.Value;
-
-            var valueProperty = typeof (ObjectContent).GetProperty("Value",
-                                                                   BindingFlags.Instance | BindingFlags.NonPublic);
-            if (valueProperty == null) return null;
-
-            return valueProperty.GetValue(content, null);
         }
 
-        // We need this because ObjectContent's constructors are internal
         private ObjectContent CreateObjectContent(object value, MediaTypeFormatter formatter, MediaTypeHeaderValue mthv)
         {
             if (value == null) return null;
 
             return new ObjectContent(value.GetType(), value, formatter, mthv);
-
-            var ctor = typeof (ObjectContent).GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance)
-                                             .FirstOrDefault(
-                                                 ci =>
-                                                 {
-                                                     var parameters = ci.GetParameters();
-                                                     if (parameters.Length != 3) return false;
-                                                     if (parameters[0].ParameterType != typeof (Type)) return false;
-                                                     if (parameters[1].ParameterType != typeof (object)) return false;
-                                                     if (parameters[2].ParameterType != typeof (MediaTypeHeaderValue))
-                                                         return false;
-                                                     return true;
-                                                 });
-
-            if (ctor == null) return null;
-
-            return ctor.Invoke(new[] {value.GetType(), value, mthv}) as ObjectContent;
         }
     }
 }
