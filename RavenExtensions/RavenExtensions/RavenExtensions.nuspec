@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>RavenDB.OData</id>
-    <version>1.0.0.3</version>
+    <version>1.0.3</version>
     <title>RavenDB OData helper</title>
     <authors>Sander Rijken</authors>
     <owners>Sander Rijken</owners>
