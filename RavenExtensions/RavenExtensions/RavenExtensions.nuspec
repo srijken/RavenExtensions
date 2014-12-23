@@ -17,6 +17,7 @@
     <dependencies>
       <dependency id="RavenDB.Client" version="3.0" />
       <dependency id="Microsoft.AspNet.WebApi.Client" version="5.1.2" />
+      <dependency id="Microsoft.AspNet.WebApi.OData" version="5.3" />
     </dependencies>
   </metadata>
   <files>
